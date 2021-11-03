@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>exe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>.</DockerfileContext>
+		<!--<DockerfileRunArguments>meno meno privileged</DockerfileRunArguments>-->
+		<DockerfileRunArguments>--device=/dev/ttyS3:/dev/ttyS3</DockerfileRunArguments>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ChannelInterface\ChannelInterface\ChannelInterface.csproj" />
+	  <ProjectReference Include="..\SerialChannelLib\SerialChannelLib\SerialChannelLib.csproj" />
+	  <ProjectReference Include="..\TcpClientChannelLib\TcpClientChannelLib\TcpClientChannelLib.csproj" />
+	</ItemGroup>
+
+
+
+</Project>

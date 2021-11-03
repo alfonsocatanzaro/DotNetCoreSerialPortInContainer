@@ -1,0 +1,1 @@
+docker run --rm --privileged --name serialport-test serialport-test

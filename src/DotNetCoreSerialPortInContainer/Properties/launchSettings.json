@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DotNetCoreSerialPortInContainer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
