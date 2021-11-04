@@ -9,7 +9,8 @@
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>.</DockerfileContext>
 		<!--<DockerfileRunArguments>meno meno privileged</DockerfileRunArguments>-->
-		<DockerfileRunArguments>--device=/dev/ttyS3:/dev/ttyS3</DockerfileRunArguments>
+		<!--<DockerfileRunArguments>meno meno device=/dev/ttyS3:/dev/ttyS3</DockerfileRunArguments>-->
+		<DockerfileRunArguments>--network="host"</DockerfileRunArguments>
 	</PropertyGroup>
 
 	<ItemGroup>

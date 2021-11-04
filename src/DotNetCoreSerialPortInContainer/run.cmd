@@ -1,1 +1,1 @@
-docker run --rm --privileged --name serialport-test serialport-test
+docker run --rm --privileged --network="host" --name serialport-test serialport-test
