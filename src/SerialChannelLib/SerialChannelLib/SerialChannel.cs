@@ -97,14 +97,14 @@ namespace SerialChannelLib
             int count = 0;
 
             while (serialPort.BytesToRead == 0 && !cancellationToken.IsCancellationRequested)
-                await Task.Delay(100);
+                await Task.Delay(20);
 
             while (serialPort.BytesToRead > 0)
             {
                 int bytes = await serialPort.BaseStream.ReadAsync(buffer, count, buffer.Length - count, cancellationToken);
                 count += bytes;
                 if (bytes == 0 && count > 0) break;
-                await Task.Delay(100);
+                await Task.Delay(20);
             }
             return count;
         }
