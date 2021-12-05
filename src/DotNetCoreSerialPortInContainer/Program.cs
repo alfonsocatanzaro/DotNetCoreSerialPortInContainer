@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO.Ports;
 
 namespace DotNetCoreSerialPortInContainer
@@ -17,11 +18,30 @@ namespace DotNetCoreSerialPortInContainer
             //PrintResult(c.TryGetPrinterInfo("192.168.64.145", 9100).Result);
             //PrintResult(c.TryGetPrinterInfo("192.168.64.145", 9100).Result);
             string portName = Environment.OSVersion.Platform == PlatformID.Unix ?
-                "/dev/ttyS6" :
+                "/dev/ttyS3" :
                 "COM6";
 
-            PrintResult(c.TryGetPrinterInfo("SerialChannel", portName, "19200", "Odd", "7", "One", "RequestToSend").Result);
+            string localHostName = Environment.OSVersion.Platform == PlatformID.Unix ?
+                "host.docker.internal" :
+                "localhost";
+            // localHostName = "host.docker.internal";
+
+            //PrintResult(c.TryGetPrinterInfo("SerialChannel", portName, "19200", "Odd", "7", "One", "RequestToSend").Result);
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+
             Console.WriteLine("Complete!");
+            stopwatch.Stop();
+            Console.WriteLine($"Elapsed: {stopwatch.ElapsedMilliseconds}ms");
             Console.ReadLine();
         }
 

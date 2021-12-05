@@ -67,9 +67,22 @@ namespace TcpClientChannelLib
             return true;
         }
 
-        public override Task<int> ReadAsync(byte[] buffer, CancellationToken cancellationToken)
-        => networkStream.ReadAsync(buffer, 0, buffer.Length,cancellationToken);
+        public override async Task<int> ReadAsync(byte[] buffer, CancellationToken cancellationToken)
+        {
+            int count = 0;
 
+            while (!networkStream.DataAvailable && !cancellationToken.IsCancellationRequested)
+                await Task.Delay(20);
+
+            while (networkStream.DataAvailable)
+            {
+                int bytes = await networkStream.ReadAsync(buffer, count, buffer.Length - count, cancellationToken);
+                count += bytes;
+                if (bytes == 0 && count > 0) break;
+                await Task.Delay(20);
+            }
+            return count;
+        }
         public override Task WriteAsync(byte[] data, CancellationToken cancellationToken)
         => networkStream.WriteAsync(data, 0,data.Length, cancellationToken);
 
