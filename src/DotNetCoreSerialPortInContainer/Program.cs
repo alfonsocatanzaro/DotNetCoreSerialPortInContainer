@@ -9,6 +9,7 @@ namespace DotNetCoreSerialPortInContainer
         static void Main(string[] args)
         {
             var c = new CustomPrinterDetective();
+            
             //PrintResult(c.TryGetPrinterInfo("192.168.64.145", 9100).Result);
             //PrintResult(c.TryGetPrinterInfo("192.168.64.145", 9100).Result);
             //PrintResult(c.TryGetPrinterInfo("192.168.64.145", 9100).Result);
@@ -16,20 +17,19 @@ namespace DotNetCoreSerialPortInContainer
             //PrintResult(c.TryGetPrinterInfo("192.168.64.145", 9100).Result);
             //PrintResult(c.TryGetPrinterInfo("192.168.64.145", 9100).Result);
             //PrintResult(c.TryGetPrinterInfo("192.168.64.145", 9100).Result);
-            //PrintResult(c.TryGetPrinterInfo("192.168.64.145", 9100).Result);
-            string portName = Environment.OSVersion.Platform == PlatformID.Unix ?
-                "/dev/ttyS3" :
-                "COM7";
+            //string portName = Environment.OSVersion.Platform == PlatformID.Unix ?
+            //    "/dev/ttyS3" :
+            //    "COM7";
 
-            string localHostName = Environment.OSVersion.Platform == PlatformID.Unix ?
-                "host.docker.internal" :
-                "localhost";
-            // localHostName = "host.docker.internal";
+            //string localHostName = Environment.OSVersion.Platform == PlatformID.Unix ?
+            //    "host.docker.internal" :
+            //    "localhost";
+            //// localHostName = "host.docker.internal";
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            PrintResult(c.TryGetPrinterInfo("SerialChannel", portName, "19200", "Odd", "7", "One", "RequestToSend").Result);
-            
+            //PrintResult(c.TryGetPrinterInfo("SerialChannel", portName, "19200", "Odd", "7", "One", "RequestToSend").Result);
+
             //PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
             //PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
             //PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
@@ -39,6 +39,11 @@ namespace DotNetCoreSerialPortInContainer
             //PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
             //PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
             //PrintResult(c.TryGetPrinterInfo("TcpClientChannel", localHostName, "22101").Result);
+
+            Console.WriteLine("192.168.64.156 :  Ciro");
+            PrintResult(c.TryGetPrinterInfo("TcpClientChannel", "192.168.64.156", "9100").Result);
+            //Console.WriteLine("192.168.64.163 :  Mauro");
+            //PrintResult(c.TryGetPrinterInfo("TcpClientChannel", "192.168.64.163", "9100").Result);
 
             Console.WriteLine("Complete!");
             stopwatch.Stop();

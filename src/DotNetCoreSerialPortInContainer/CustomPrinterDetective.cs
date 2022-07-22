@@ -28,6 +28,23 @@ namespace DotNetCoreSerialPortInContainer
             0x03
         };
 
+        private byte[] commandEpson1074 = new byte[] {
+            // Start frame
+            0x02,
+            // frame count "00"
+            0x30, 0x30,
+            // Identifier "E"
+            0x45,
+            // Command "1074"
+            0x31, 0x30, 0x37, 0x34,
+            // Operator "01"
+            0x30, 0x31,
+            // Checksum "66"
+            0x36, 0x36,
+            // End frame
+            0x03
+        };
+
         public async Task<CustomPrinterInfo> TryGetPrinterInfo(params string [] args)
         {
 
@@ -45,30 +62,51 @@ namespace DotNetCoreSerialPortInContainer
             try
             {
                 channel.Open();
-
                 var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-
                 cancellationTokenSource.Token.Register(() => channel.Close());
-
-                await channel.WriteAsync(command, cancellationTokenSource.Token);
-
+                await channel.WriteAsync(commandEpson1074, cancellationTokenSource.Token);
                 var receiveBuffer = new byte[256];
-
                 int bytes = await channel.ReadAsync(receiveBuffer, cancellationTokenSource.Token);
+                Console.WriteLine(System.Text.Encoding.UTF8.GetString(receiveBuffer));
+                
+                await Task.Delay(500);
+                await channel.WriteAsync(commandEpson1074, cancellationTokenSource.Token);
+                receiveBuffer = new byte[256];
+                bytes = await channel.ReadAsync(receiveBuffer, cancellationTokenSource.Token);
+                Console.WriteLine(System.Text.Encoding.UTF8.GetString(receiveBuffer));
+
+                await Task.Delay(500);
+                await channel.WriteAsync(commandEpson1074, cancellationTokenSource.Token);
+                receiveBuffer = new byte[256];
+                bytes = await channel.ReadAsync(receiveBuffer, cancellationTokenSource.Token);
+                Console.WriteLine(System.Text.Encoding.UTF8.GetString(receiveBuffer));
+
+                await Task.Delay(500);
+                await channel.WriteAsync(commandEpson1074, cancellationTokenSource.Token);
+                receiveBuffer = new byte[256];
+                bytes = await channel.ReadAsync(receiveBuffer, cancellationTokenSource.Token);
+                Console.WriteLine(System.Text.Encoding.UTF8.GetString(receiveBuffer));
+
+                await Task.Delay(500);
+                await channel.WriteAsync(commandEpson1074, cancellationTokenSource.Token);
+                receiveBuffer = new byte[256];
+                bytes = await channel.ReadAsync(receiveBuffer, cancellationTokenSource.Token);
+                Console.WriteLine(System.Text.Encoding.UTF8.GetString(receiveBuffer));
 
                 channel.Close();
 
-                if (bytes == 0)
-                    throw new CustomPrinterDetectiveException(channel, "0 bytes received");
-                if (bytes < 50)
-                    throw new CustomPrinterDetectiveException(channel, "Response too short");
-                if (receiveBuffer[0] == 0x15)
-                    throw new CustomPrinterDetectiveException(channel, "NACK received");
-                if (receiveBuffer[0] != 0x06)
-                    throw new CustomPrinterDetectiveException(channel, "Not ACK received");
-                if (Encoding.UTF8.GetString(receiveBuffer.Skip(5).Take(4).ToArray()) != "1511")
-                    throw new CustomPrinterDetectiveException(channel, "Mismatch command echo ");
+                //if (bytes == 0)
+                //    throw new CustomPrinterDetectiveException(channel, "0 bytes received");
+                //if (bytes < 50)
+                //    throw new CustomPrinterDetectiveException(channel, "Response too short");
+                //if (receiveBuffer[0] == 0x15)
+                //    throw new CustomPrinterDetectiveException(channel, "NACK received");
+                //if (receiveBuffer[0] != 0x06)
+                //    throw new CustomPrinterDetectiveException(channel, "Not ACK received");
+                //if (Encoding.UTF8.GetString(receiveBuffer.Skip(5).Take(4).ToArray()) != "1511")
+                //    throw new CustomPrinterDetectiveException(channel, "Mismatch command echo ");
 
+                
 
                 return CustomPrinterInfo.Ok(
                     channel,
